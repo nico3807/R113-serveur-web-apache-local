@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Page 4 - Droits d'accès</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>4. 🔑 Modification de contenu et Droits</h1>
+      </header>
+      <section>
+        <p>
+          <em
+            >On simule une situation réelle en créant un utilisateur standard
+            <code>etudiant</code></em
+          >.
+        </p>
+        <ol>
+          <li>
+            <em>Créez l'utilisateur : <code>adduser etudiant</code></em
+            >.
+          </li>
+          <li>
+            <em>Connectez-vous : <code>su - etudiant</code></em
+            >.
+          </li>
+          <li>
+            <strong>Q4.</strong> Tentez de modifier <code>/var/www/html/</code>.
+            Quel est le message d'erreur ? <em>Pourquoi ? </em>
+          </li>
+        </ol>
+        <div class="code-step">
+          <button class="toggle-button-code" onclick="toggleCode(this)">
+            [ + ] Indice : Correction des droits (chown)
+          </button>
+          <div class="code-content">
+            <p>
+              <em
+                ><strong>Q5.</strong> Quelle est la commande exacte utilisée
+                pour rendre l'étudiant propriétaire du dossier Web ?
+              </em>
+            </p>
+            <pre><code>chown etudiant:etudiant /var/www/html/</code></pre>
+            <p>
+              <em
+                >Créez ensuite votre <code>index.html</code> avec l'éditeur
+                <code>nano</code></em
+              >.
+            </p>
+          </div>
+        </div>
+      </section>
+      <div class="menu-buttons">
+        <div class="back-to-menu">
+          <a href="page_3.html">← Partie précédente</a>
+        </div>
+        <div class="back-to-menu">
+          <a href="page_5.html">→ Partie suivante</a>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p style="text-align: center; font-size: 0.9em; color: #666">
+        © 2025 - BUT MMI Béziers - MAURIN N.<br />
+        R1.13 Hébergement
+      </p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>

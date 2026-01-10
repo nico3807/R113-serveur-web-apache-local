@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Page 1 - Prise en main</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h1>1. 🖥️ Prise en main de l'environnement</h1>
+      </header>
+      <section>
+        <h2>Environnement Bac à sable (Killercoda)</h2>
+        <p>
+          L'environnement est éphémère. <em>Ne fermez pas votre onglet ! </em>
+        </p>
+        <ol>
+          <li>
+            <em
+              >Allez sur :
+              <a
+                href="https://killercoda.com/playgrounds/scenario/ubuntu"
+                target="_blank"
+                >Killercoda Ubuntu</a
+              ></em
+            >
+          </li>
+          <li>
+            Vérifiez votre identité avec la commande <code>whoami</code>.
+            <em>Vous devez être <strong>root</strong></em
+            >.
+          </li>
+          <li>Vérifiez la version du système.</li>
+        </ol>
+        <div class="code-step">
+          <button class="toggle-button-code" onclick="toggleCode(this)">
+            [ + ] Indice : Commande pour vérifier l'OS
+          </button>
+          <div class="code-content">
+            <p>
+              <em
+                >Utilisez la commande <code>cat</code> pour lire le fichier
+                d'information système</em
+              >:
+            </p>
+            <pre><code>cat /etc/os-release</code></pre>
+          </div>
+        </div>
+      </section>
+      <div class="menu-buttons">
+        <div class="back-to-menu">
+          <a href="index.html">↑ Retour au Menu du TP</a>
+        </div>
+        <div class="back-to-menu">
+          <a href="page_2.html">→ Partie suivante</a>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <p style="text-align: center; font-size: 0.9em; color: #666">
+        © 2025 - BUT MMI Béziers - MAURIN N.<br />
+        R1.13 Hébergement
+      </p>
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
