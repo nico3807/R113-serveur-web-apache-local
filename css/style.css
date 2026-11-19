@@ -1,5 +1,5 @@
 /* ============================================================
-   R1.13 - TP3 Serveur Web Apache
+   R1.13 - TP4 Serveur Web Apache
    Feuille de style partagée par toutes les pages (même charte que le
    TP1 Système de fichiers et ligne de commande)
    ============================================================ */
@@ -1746,7 +1746,7 @@ details.callout[open] summary {
 }
 
 /* ============================================================
-   Ajouts propres au TP3 Serveur Web Apache
+   Ajouts propres au TP4 Serveur Web Apache
    ============================================================ */
 
 .terminal .t-lien {
