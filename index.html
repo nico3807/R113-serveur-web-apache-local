@@ -1,97 +1,178 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TP3 - Serveur Web Apache Local</title>
-    <link rel="stylesheet" href="style.css" />
+    <title>R1.13 - TP3 Serveur Web Apache</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect x=%278%27 y=%2716%27 width=%2784%27 height=%2768%27 rx=%2710%27 fill=%27%231c2333%27/%3E%3Cpath d=%27M24 38 L38 50 L24 62%27 stroke=%27%236ee7a8%27 stroke-width=%278%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M46 64 H74%27 stroke=%27%237cb7ff%27 stroke-width=%278%27 stroke-linecap=%27round%27/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>
-    <header class="header">
-      <h1>TP3 : Serveur Web Apache Local</h1>
-      <p>R1.13 Hébergement - Administration de serveurs distants</p>
+  <body data-page="index">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header">
+      <nav class="nav-wrap">
+        <a class="brand" href="index.html"
+          ><img src="img/logo_iut.jpg" alt="" />
+          <span
+            >R1.13 - Hébergement
+            <small>TP3 · Serveur Web Apache</small></span
+          ><img src="img/logo_mmi.jpg" alt="" />
+        </a>
+        <div class="site-nav">
+          <a href="index.html" data-nav="index">Accueil</a>
+          <a href="prerequis.html" data-nav="prerequis">Prise en main</a>
+          <a href="installation.html" data-nav="installation">Installation</a>
+          <a href="configuration.html" data-nav="configuration">Configuration</a>
+          <a href="securisation.html" data-nav="securisation">Sécurisation</a>
+          <a href="livrable.html" data-nav="livrable">Livrable</a>
+          <a href="memo.html" data-nav="memo">Mémo</a>
+        </div>
+      </nav>
     </header>
 
-    <div class="container">
-      <page2
-        >🧭 Apprenez à installer, configurer et sécuriser un serveur HTTP dans
-        un environnement Linux distant.</page2
-      >
-      <hr />
+    <main id="contenu">
+      <p class="eyebrow">TP3 - BUT MMI 1 · R1.13 Hébergement</p>
+      <h1>Serveur Web Apache</h1>
+      <p class="lede">
+        Apprenez à installer, configurer et sécuriser un serveur HTTP dans un
+        environnement Linux distant : installation du service, accès au site,
+        droits sur les fichiers, alias, journaux, authentification et page
+        d'erreur personnalisée.
+      </p>
 
-      <ul class="nav-menu">
+      <div class="grid cols-3" style="margin-top: 1.8rem">
+        <div class="card">
+          <p class="eyebrow">Objectif</p>
+          <p>
+            Installer, configurer et sécuriser un serveur HTTP (Apache) dans
+            un environnement Linux distant, et observer les échanges entre le
+            navigateur et le serveur.
+          </p>
+        </div>
+        <div class="card">
+          <p class="eyebrow">Compétence ciblée</p>
+          <p>
+            <strong>AC14.01</strong> - Exploiter de manière autonome un
+            environnement de développement efficace et productif.
+          </p>
+        </div>
+        <div class="card">
+          <p class="eyebrow">Matériel / logiciel</p>
+          <p>
+            Un navigateur web et le bac à sable Ubuntu de Killercoda (une
+            machine Linux en ligne, utilisée en <strong>root</strong>).
+          </p>
+        </div>
+      </div>
+
+      <h2>Déroulé du TP</h2>
+      <ul class="timeline">
         <li>
-          <a href="page_1.html">
-            <p class="menu-title">1. 🖥️ Prise en main</p>
-            <p class="menu-subtitle">
-              Utilisation de Killercoda et terminal Ubuntu.
-            </p>
-          </a>
+          <span
+            ><strong>1. Prise en main</strong> - Ouvrir le bac à sable Ubuntu
+            de Killercoda, vérifier son identité et la version du
+            système.</span
+          >
         </li>
         <li>
-          <a href="page_2.html">
-            <p class="menu-title">2. ⚙️ Installation</p>
-            <p class="menu-subtitle">Mise à jour et installation d'Apache2.</p>
-          </a>
+          <span
+            ><strong>2 et 3. Installation et accès</strong> - Mettre à jour
+            l'index des paquets, installer Apache, vérifier le service, puis
+            exposer le port 80 pour voir le site. Questions Q1 à Q3.</span
+          >
         </li>
         <li>
-          <a href="page_3.html">
-            <p class="menu-title">3. 🌐 Accès et Exposition</p>
-            <p class="menu-subtitle">Ouverture des ports et accès au site.</p>
-          </a>
+          <span
+            ><strong>4 à 6. Configuration</strong> - Droits sur le dossier web
+            (<code>chown</code>), création d'un alias, lecture des journaux en
+            temps réel. Questions Q4 à Q7.</span
+          >
         </li>
         <li>
-          <a href="page_4.html">
-            <p class="menu-title">4. 🔑 Modification et Droits</p>
-            <p class="menu-subtitle">Gestion des permissions (chown).</p>
-          </a>
+          <span
+            ><strong>7 et 8. Sécurisation</strong> - Protéger un dossier par
+            mot de passe (<code>.htaccess</code>), personnaliser la page
+            d'erreur 404, observer les échanges dans les outils de
+            développement. Questions Q8 à Q10.</span
+          >
         </li>
         <li>
-          <a href="page_5.html">
-            <p class="menu-title">5. 📁 Création d'un Alias</p>
-            <p class="menu-subtitle">Pointer vers un dossier personnel.</p>
-          </a>
-        </li>
-        <li>
-          <a href="page_6.html">
-            <p class="menu-title">6. 📜 Logs et Diagnostic</p>
-            <p class="menu-subtitle">Analyse du trafic en temps réel.</p>
-          </a>
-        </li>
-        <li>
-          <a href="page_7.html">
-            <p class="menu-title">7. 🔒 Sécurisation (.htaccess)</p>
-            <p class="menu-subtitle">Basic Authentication et htpasswd.</p>
-          </a>
-        </li>
-        <li>
-          <a href="page_8.html">
-            <p class="menu-title">8. ✨ Personnalisation Error 404</p>
-            <p class="menu-subtitle">Amélioration de l'UX des erreurs.</p>
-          </a>
-        </li>
-        <li>
-          <a href="page_9.html">
-            <p class="menu-title">9. 📤 Livrables</p>
-            <p class="menu-subtitle">Instructions de rendu final.</p>
-          </a>
+          <span
+            ><strong>9. Livrable</strong> - Deux captures d'écran et les
+            réponses aux 10 questions, à déposer sur Moodle.</span
+          >
         </li>
       </ul>
-      <div class="exemple-menu">
-        <a
-          href="https://moodle-but.iutbeziers.fr/moodle/pluginfile.php/50984/mod_resource/content/1/TP3-%20Memento_v26.pdf"
-          target="_blank"
-        >
-          Fiche memento
-        </a>
+
+      <h2>Comment utiliser ce site</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>🖥️ Un serveur d'entraînement intégré</h3>
+          <p>
+            Les pages du TP contiennent un serveur Ubuntu simulé : un terminal
+            et un navigateur reliés à un vrai petit Apache. Chaque action du
+            sujet se coche toute seule quand tu la réussis. Rien n'est
+            installé sur ton ordinateur : tu peux te tromper sans risque.
+          </p>
+        </div>
+        <div class="card">
+          <h3>✅ Le livrable se fait dans Killercoda</h3>
+          <p>
+            Une fois l'entraînement réussi, refais les manipulations dans le
+            bac à sable Killercoda pour tes captures d'écran. Rédige tes
+            réponses dans la page Livrable : elles restent enregistrées dans
+            ton navigateur.
+          </p>
+        </div>
       </div>
-    </div>
-    <footer>
-      <p style="text-align: center; font-size: 0.9em; color: #666">
-        © 2025 - BUT MMI Béziers - MAURIN N.<br />
-        R1.13 Hébergement
+
+      <div class="callout warn" style="margin-top: 1.6rem">
+        <p>
+          <strong>Fiche memento :</strong> la fiche récapitulative du TP3 est
+          aussi disponible sur Moodle :
+          <a
+            class="etape-lien"
+            href="https://moodle-but.iutbeziers.fr/moodle/pluginfile.php/50984/mod_resource/content/1/TP3-%20Memento_v26.pdf"
+            target="_blank"
+            rel="noopener"
+            >Fiche memento (PDF)</a
+          >. Les commandes du TP sont reprises dans la page
+          <a href="memo.html">Mémo</a>.
+        </p>
+      </div>
+
+      <details class="callout" style="margin-top: 2rem">
+        <summary><strong>Descriptif de la ressource R1.13 Hébergement</strong></summary>
+        <p>
+          Objectif : comprendre le fonctionnement général d'internet et
+          initier à l'administration de serveurs en gérant son poste de
+          travail :
+        </p>
+        <ul>
+          <li>Présentation de l'architecture de différents matériels (ordinateurs, tablettes, téléphones...) et découverte de ces éléments au travers des outils et interfaces des différents OS ;</li>
+          <li>Découverte des systèmes d'exploitation (processus, système de fichiers, comptes et permissions, lignes de commande) ;</li>
+          <li>Présentation d'Internet (historique, acteurs, normalisation) et de son fonctionnement (adressage, routage) ;</li>
+          <li>Les applications sur Internet : modèle client/serveur, notion de ports (DNS, HTTP), expérimentation et visualisation des échanges via les outils de développement des navigateurs ;</li>
+          <li>Installation et configuration d'un serveur Web local (gestion du service, fichiers de traces, permissions, alias...) ;</li>
+          <li>Utilisation de serveurs distants : client FTP, client SSH ;</li>
+          <li>Déploiement d'un site Web sur un serveur Web préconfiguré.</li>
+        </ul>
+        <p>TP : Nicolas MAURIN</p>
+      </details>
+
+      <p style="text-align: center; margin-top: 2rem">
+        <a class="btn" href="prerequis.html">Commencer par la prise en main &rarr;</a>
       </p>
+    </main>
+
+    <footer class="site-footer">
+      R1.13 Hébergement - BUT MMI 1 · IUT de Béziers · TP3 Serveur Web Apache
     </footer>
-    <script src="script.js"></script>
+
+    <script src="js/main.js"></script>
   </body>
 </html>

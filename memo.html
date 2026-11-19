@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mémo - R1.13 TP3</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect x=%278%27 y=%2716%27 width=%2784%27 height=%2768%27 rx=%2710%27 fill=%27%231c2333%27/%3E%3Cpath d=%27M24 38 L38 50 L24 62%27 stroke=%27%236ee7a8%27 stroke-width=%278%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M46 64 H74%27 stroke=%27%237cb7ff%27 stroke-width=%278%27 stroke-linecap=%27round%27/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="memo">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header">
+      <nav class="nav-wrap">
+        <a class="brand" href="index.html"
+          ><img src="img/logo_iut.jpg" alt="" />
+          <span
+            >R1.13 - Hébergement
+            <small>TP3 · Serveur Web Apache</small></span
+          ><img src="img/logo_mmi.jpg" alt="" />
+        </a>
+        <div class="site-nav">
+          <a href="index.html" data-nav="index">Accueil</a>
+          <a href="prerequis.html" data-nav="prerequis">Prise en main</a>
+          <a href="installation.html" data-nav="installation">Installation</a>
+          <a href="configuration.html" data-nav="configuration">Configuration</a>
+          <a href="securisation.html" data-nav="securisation">Sécurisation</a>
+          <a href="livrable.html" data-nav="livrable">Livrable</a>
+          <a href="memo.html" data-nav="memo">Mémo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <p class="eyebrow">Fiche récapitulative</p>
+      <h1>Aide-mémoire : administrer un serveur Apache</h1>
+      <p class="lede">
+        Les commandes, les fichiers et les codes de statut utilisés dans ce
+        TP, sur une machine Ubuntu (Killercoda). Les commandes d'installation
+        et de configuration se tapent en <strong>root</strong>. La fiche
+        memento est aussi disponible sur Moodle :
+        <a
+          class="etape-lien"
+          href="https://moodle-but.iutbeziers.fr/moodle/pluginfile.php/50984/mod_resource/content/1/TP3-%20Memento_v26.pdf"
+          target="_blank"
+          rel="noopener"
+          >Fiche memento (PDF)</a
+        >.
+      </p>
+
+      <p>
+        <input class="filtre" id="filtre" type="search" placeholder="🔎 Filtrer : service, droits, journal, 404..." aria-label="Filtrer les commandes" />
+      </p>
+
+      <h2>Système, paquets et service</h2>
+      <p>Savoir qui l'on est, installer un logiciel et piloter le service web.</p>
+      <div class="table-scroll">
+        <table data-filtrable>
+          <thead><tr><th>Commande</th><th>Signification</th><th>Rôle / utilisation</th><th>Arguments / options clés</th></tr></thead>
+          <tbody>
+            <tr><td><code data-copie>whoami</code></td><td>Who am I</td><td>Affiche le nom de l'utilisateur connecté (root dans Killercoda).</td><td>Aucun</td></tr>
+            <tr><td><code data-copie>cat /etc/os-release</code></td><td>Concatenate</td><td>Affiche le contenu d'un fichier : ici, la version du système.</td><td>Un ou plusieurs fichiers</td></tr>
+            <tr><td><code data-copie>apt update</code></td><td>Advanced Package Tool</td><td>Met à jour l'index des paquets disponibles. À lancer avant toute installation.</td><td>Réservé à root</td></tr>
+            <tr><td><code data-copie>apt install apache2</code></td><td>Advanced Package Tool</td><td>Installe un paquet et ses dépendances (ici le serveur web Apache, démarré aussitôt).</td><td><code>-y</code> répond « oui » à la question de confirmation</td></tr>
+            <tr><td><code data-copie>systemctl status apache2</code></td><td>System Control</td><td>Affiche l'état du service : <code>active (running)</code>, <code>inactive (dead)</code> ou <code>failed</code>.</td><td><code>start</code> · <code>stop</code> · <code>restart</code> · <code>reload</code> (relit la configuration sans couper le service)</td></tr>
+            <tr><td><code data-copie>systemctl reload apache2</code></td><td>System Control</td><td>Fait relire sa configuration à Apache, après chaque modification d'un fichier <code>.conf</code>.</td><td><code>restart</code> arrête puis redémarre</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Comptes et droits</h2>
+      <p>Travailler avec un compte ordinaire et donner les bons droits au bon compte.</p>
+      <div class="table-scroll">
+        <table data-filtrable>
+          <thead><tr><th>Commande</th><th>Signification</th><th>Rôle / utilisation</th><th>Exemples</th></tr></thead>
+          <tbody>
+            <tr><td><code>adduser</code></td><td>Add user</td><td>Crée un compte avec son dossier personnel (<code>/home/nom</code>, droits 750) et son mot de passe.</td><td><code data-copie>adduser etudiant</code></td></tr>
+            <tr><td><code>su -</code></td><td>Substitute User</td><td>Ouvre une session sous un autre compte. <code>exit</code> revient au compte précédent.</td><td><code data-copie>su - etudiant</code></td></tr>
+            <tr><td><code>ls -l</code> / <code>ls -ld</code></td><td>List (long)</td><td>Affiche les droits, le propriétaire et le groupe des fichiers (ou du dossier lui-même avec <code>-d</code>).</td><td><code data-copie>ls -ld /var/www/html</code></td></tr>
+            <tr><td><code>chown</code></td><td>Change Owner</td><td>Change le propriétaire (et le groupe) d'un fichier ou d'un dossier. Réservé à root.</td><td><code data-copie>chown etudiant:etudiant /var/www/html/</code><br /><code>-R</code> : aussi tout le contenu</td></tr>
+            <tr><td><code>chmod</code></td><td>Change Mode</td><td>Change les droits : r (4) lecture, w (2) écriture, x (1) exécution ou traversée d'un dossier, pour u (propriétaire), g (groupe), o (autres).</td><td><code data-copie>chmod o+x /home/etudiant</code><br /><code>chmod 755 dossier</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Configuration d'Apache</h2>
+      <div class="table-scroll">
+        <table data-filtrable>
+          <thead><tr><th>Commande</th><th>Rôle / utilisation</th><th>Exemples</th></tr></thead>
+          <tbody>
+            <tr><td><code>nano</code></td><td>Éditeur de texte du terminal : <kbd>Ctrl</kbd>+<kbd>O</kbd> puis <kbd>Entrée</kbd> enregistre, <kbd>Ctrl</kbd>+<kbd>X</kbd> quitte.</td><td><code data-copie>nano /etc/apache2/apache2.conf</code></td></tr>
+            <tr><td><code>a2enconf</code> / <code>a2disconf</code></td><td>Active (ou désactive) un fichier de <code>conf-available</code> en créant (ou supprimant) un lien dans <code>conf-enabled</code>.</td><td><code data-copie>a2enconf mon_alias</code></td></tr>
+            <tr><td><code>a2ensite</code> / <code>a2dissite</code></td><td>Même principe pour les sites (<code>sites-available</code> → <code>sites-enabled</code>).</td><td><code data-copie>a2ensite 000-default</code></td></tr>
+            <tr><td><code>apache2ctl configtest</code></td><td>Vérifie la syntaxe de toute la configuration : <code>Syntax OK</code>, ou le fichier et la ligne fautifs.</td><td><code data-copie>apache2ctl configtest</code></td></tr>
+            <tr><td><code>htpasswd</code></td><td>Crée ou complète un fichier de mots de passe pour l'authentification Basic. <code>-c</code> crée le fichier : seulement la première fois !</td><td><code data-copie>htpasswd -c /etc/apache2/.htpasswd admin</code></td></tr>
+            <tr><td><code>tail -f</code></td><td>Affiche la fin d'un fichier et la suite au fil de l'eau. <kbd>Ctrl</kbd>+<kbd>C</kbd> arrête.</td><td><code data-copie>tail -f /var/log/apache2/access.log</code></td></tr>
+            <tr><td><code>curl</code></td><td>Envoie une requête HTTP depuis le terminal. <code>-I</code> : seulement les en-têtes de la réponse.</td><td><code data-copie>curl -I localhost</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Fichiers et dossiers importants</h2>
+      <div class="table-scroll">
+        <table data-filtrable>
+          <thead><tr><th>Chemin</th><th>Rôle</th></tr></thead>
+          <tbody>
+            <tr><td><code>/var/www/html/</code></td><td>Racine du site (DocumentRoot) : <code>index.html</code> y est la page d'accueil.</td></tr>
+            <tr><td><code>/etc/apache2/apache2.conf</code></td><td>Configuration principale : blocs <code>&lt;Directory&gt;</code>, <code>AllowOverride</code> (autorise ou non les <code>.htaccess</code>).</td></tr>
+            <tr><td><code>/etc/apache2/conf-available/</code><br /><code>/etc/apache2/conf-enabled/</code></td><td>Morceaux de configuration disponibles, et ceux qui sont activés (liens créés par <code>a2enconf</code>). Exemple : <code>mon_alias.conf</code>.</td></tr>
+            <tr><td><code>/etc/apache2/sites-available/000-default.conf</code></td><td>Le site par défaut : <code>&lt;VirtualHost *:80&gt;</code>, <code>DocumentRoot</code>, <code>ErrorDocument</code>.</td></tr>
+            <tr><td><code>/var/log/apache2/access.log</code></td><td>Journal des accès : une ligne par requête (IP, date, requête, code, taille, User-Agent).</td></tr>
+            <tr><td><code>/var/log/apache2/error.log</code></td><td>Journal des erreurs : la cause des 403 et des 500.</td></tr>
+            <tr><td><code>/etc/apache2/.htpasswd</code></td><td>Comptes de l'authentification Basic (login et empreinte du mot de passe), hors du dossier web.</td></tr>
+            <tr><td><code>.htaccess</code></td><td>Configuration propre à un dossier du site, relue à chaque requête si <code>AllowOverride</code> l'autorise.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>Codes de statut HTTP</h2>
+      <div class="table-scroll">
+        <table data-filtrable>
+          <thead><tr><th>Code</th><th>Signification</th><th>Dans ce TP</th></tr></thead>
+          <tbody>
+            <tr><td><code>200</code></td><td>OK</td><td>La page est envoyée.</td></tr>
+            <tr><td><code>301</code></td><td>Moved Permanently</td><td>Adresse d'un dossier demandée sans « / » final : le navigateur est redirigé.</td></tr>
+            <tr><td><code>401</code></td><td>Unauthorized</td><td>Le dossier <code>/admin</code> exige un identifiant et un mot de passe.</td></tr>
+            <tr><td><code>403</code></td><td>Forbidden</td><td>Accès interdit : droits du disque (<code>www-data</code>) ou règle <code>Require</code>.</td></tr>
+            <tr><td><code>404</code></td><td>Not Found</td><td>Aucun fichier ne correspond à l'adresse (page <code>oups.html</code> avec <code>ErrorDocument</code>).</td></tr>
+            <tr><td><code>500</code></td><td>Internal Server Error</td><td>Erreur côté serveur, par exemple une faute dans un <code>.htaccess</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warn">
+        <h4>À retenir</h4>
+        <p>
+          Apache ne relit ses fichiers <code>.conf</code> qu'au démarrage ou au
+          rechargement : après chaque modification, <code>apache2ctl
+          configtest</code> puis <code>systemctl reload apache2</code>. Dans un
+          navigateur, n'utilisez jamais <kbd>Ctrl</kbd>+<kbd>W</kbd> dans nano
+          (recherche) : ce raccourci ferme l'onglet et votre session
+          Killercoda.
+        </p>
+      </div>
+
+      <h2>Quiz : quelle commande ?</h2>
+      <div class="question" id="quiz-cmd">
+        <p class="q-titre"><span class="q-compte"></span></p>
+        <p class="q-enonce"></p>
+        <form>
+          <input type="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Commande" placeholder="Tape la commande" style="font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" />
+          <button class="btn" type="submit">Vérifier</button>
+        </form>
+        <p class="feedback" aria-live="polite"></p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      R1.13 Hébergement - BUT MMI 1 · IUT de Béziers · TP3 Serveur Web Apache
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/memo.js"></script>
+  </body>
+</html>

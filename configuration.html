@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuration - R1.13 TP3</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect x=%278%27 y=%2716%27 width=%2784%27 height=%2768%27 rx=%2710%27 fill=%27%231c2333%27/%3E%3Cpath d=%27M24 38 L38 50 L24 62%27 stroke=%27%236ee7a8%27 stroke-width=%278%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M46 64 H74%27 stroke=%27%237cb7ff%27 stroke-width=%278%27 stroke-linecap=%27round%27/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="configuration">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header">
+      <nav class="nav-wrap">
+        <a class="brand" href="index.html"
+          ><img src="img/logo_iut.jpg" alt="" />
+          <span
+            >R1.13 - Hébergement
+            <small>TP3 · Serveur Web Apache</small></span
+          ><img src="img/logo_mmi.jpg" alt="" />
+        </a>
+        <div class="site-nav">
+          <a href="index.html" data-nav="index">Accueil</a>
+          <a href="prerequis.html" data-nav="prerequis">Prise en main</a>
+          <a href="installation.html" data-nav="installation">Installation</a>
+          <a href="configuration.html" data-nav="configuration">Configuration</a>
+          <a href="securisation.html" data-nav="securisation">Sécurisation</a>
+          <a href="livrable.html" data-nav="livrable">Livrable</a>
+          <a href="memo.html" data-nav="memo">Mémo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <p class="eyebrow">Parties 4, 5 et 6</p>
+      <h1>Droits, alias et journaux</h1>
+      <p class="lede">
+        Modifier le contenu du site avec un compte ordinaire, publier un
+        dossier personnel grâce à un alias, puis surveiller les accès au
+        serveur. Pour trouver les commandes, s'aider du
+        <a href="memo.html">Mémo</a>. Les questions <strong>Q4 à Q7</strong>
+        sont à rédiger dans la page <a href="livrable.html">Livrable</a>.
+      </p>
+
+      <div class="callout warn">
+        <p>
+          Entraîne-toi sur le serveur simulé (les actions se cochent toutes
+          seules), puis <strong>refais tout dans Killercoda</strong>. Le
+          serveur simulé est le même que sur la page Installation : Apache
+          doit déjà y être installé.
+        </p>
+      </div>
+
+      <div class="atelier">
+        <div>
+          <h2 style="margin-top: 0">4. Modification de contenu et droits</h2>
+          <p>
+            On simule une situation réelle en créant un utilisateur standard
+            <code>etudiant</code>.
+          </p>
+          <ol class="actions">
+            <li data-mission="c-adduser"><span><strong>Créez l'utilisateur :</strong> <code>adduser etudiant</code> (choisissez un mot de passe ; les autres informations peuvent rester vides : <kbd>Entrée</kbd>).</span></li>
+            <li data-mission="c-su"><span><strong>Connectez-vous :</strong> <code>su - etudiant</code></span></li>
+            <li data-mission="c-refus"><span><strong>Tentez de modifier <code>/var/www/html/</code></strong> (y créer un fichier, ou modifier <code>index.html</code>).</span></li>
+          </ol>
+          <div class="q-sujet">
+            <p><span class="q-num">Q4</span>Tentez de modifier <code>/var/www/html/</code>. Quel est le message d'erreur ? Pourquoi ?</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q4">Rédiger ma réponse &rarr;</a></p>
+          </div>
+          <ol class="actions" start="4" style="counter-reset: action 3">
+            <li data-mission="c-exit"><span><strong>Revenez au compte root</strong> : <code>exit</code></span></li>
+            <li data-mission="c-chown"><span><strong>Rendez <code>etudiant</code> propriétaire du dossier web</strong> <code>/var/www/html/</code>.</span></li>
+            <li data-mission="c-index"><span><strong>Créez ensuite votre <code>index.html</code> avec l'éditeur <code>nano</code></strong>, en tant qu'<code>etudiant</code>.</span></li>
+            <li data-mission="c-voir"><span><strong>Affichez votre nouvelle page</strong> dans le navigateur.
+              <button type="button" class="popup-btn" data-ouvrir-onglet="navigateur">🌐 Ouvrir le navigateur</button></span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : correction des droits (chown)</summary>
+            <p>
+              <strong>Q5.</strong> Quelle est la commande exacte utilisée pour
+              rendre l'étudiant propriétaire du dossier Web ?
+            </p>
+            <pre><code>chown etudiant:etudiant /var/www/html/</code></pre>
+            <p>
+              Créez ensuite votre <code>index.html</code> avec l'éditeur
+              <code>nano</code>.
+            </p>
+          </details>
+          <details class="indice">
+            <summary>Indice : « Permission denied » en enregistrant index.html ?</summary>
+            <p>
+              <code>chown</code> sans <code>-R</code> ne change que le dossier :
+              le fichier <code>index.html</code> installé par Apache appartient
+              toujours à <code>root</code>. En tant qu'<code>etudiant</code>,
+              supprimez-le (<code>rm /var/www/html/index.html</code>, puis
+              <kbd>y</kbd>) avant de le recréer avec nano. Vérifiez les
+              propriétaires avec <code>ls -l /var/www/html</code>.
+            </p>
+          </details>
+          <details class="indice">
+            <summary>Rappel : nano en bref</summary>
+            <p>
+              <code>nano /var/www/html/index.html</code> ouvre le fichier.
+              <kbd>Ctrl</kbd> + <kbd>O</kbd> puis <kbd>Entrée</kbd> enregistre ;
+              <kbd>Ctrl</kbd> + <kbd>X</kbd> quitte. Attention : dans un
+              navigateur, <kbd>Ctrl</kbd> + <kbd>W</kbd> ferme l'onglet (et
+              votre session Killercoda !).
+            </p>
+          </details>
+          <div class="q-sujet">
+            <p><span class="q-num">Q5</span>Quelle est la commande exacte utilisée pour rendre l'étudiant propriétaire du dossier Web ?</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q5">Rédiger ma réponse &rarr;</a></p>
+          </div>
+
+          <h2>5. Création d'un Alias</h2>
+          <p>
+            L'objectif est de faire pointer <code>.../test</code> vers un
+            dossier personnel <code>~/dossier_test</code>.
+          </p>
+          <ol class="actions">
+            <li data-mission="c-dossier"><span><strong>En tant qu'<code>etudiant</code>, créez le dossier <code>~/dossier_test</code></strong> et une page <code>index.html</code> à l'intérieur.</span></li>
+            <li data-mission="c-conf"><span><strong>En root, créez le fichier</strong> <code>/etc/apache2/conf-available/mon_alias.conf</code>.</span></li>
+            <li data-mission="c-a2en"><span><strong>Activez-le</strong> avec <code>a2enconf mon_alias</code></span></li>
+            <li data-mission="c-reload"><span><strong>et rechargez Apache.</strong></span></li>
+            <li data-mission="c-test"><span><strong>Ouvrez <code>.../test</code></strong> dans le navigateur.</span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : configuration de l'Alias</summary>
+            <p>Dans votre fichier conf :</p>
+            <pre><code>Alias /test /home/etudiant/dossier_test
+&lt;Directory /home/etudiant/dossier_test&gt;
+    Require all granted
+&lt;/Directory&gt;</code></pre>
+            <p>
+              Si vous avez une erreur 403, utilisez
+              <code>chmod o+x /home/etudiant</code>.
+            </p>
+          </details>
+          <div class="q-sujet">
+            <p><span class="q-num">Q6</span>Que s'affiche-t-il à l'adresse <code>.../test</code> ? Si vous avez obtenu une erreur 403 (<em>Forbidden</em>), expliquez pourquoi et ce que corrige la commande <code>chmod o+x /home/etudiant</code>.</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q6">Rédiger ma réponse &rarr;</a></p>
+          </div>
+
+          <h2>6. Logs et diagnostic</h2>
+          <p>Surveillez les accès à votre serveur en temps réel.</p>
+          <ol class="actions">
+            <li data-mission="c-tail"><span><strong>Utilisez <code>tail -f</code> sur le journal d'accès d'Apache</strong> (en root).</span></li>
+            <li data-mission="c-trafic"><span><strong>Générez du trafic</strong> dans votre navigateur pendant que <code>tail -f</code> tourne.</span></li>
+            <li data-mission="c-404"><span><strong>Générez une erreur 404</strong> (une adresse qui n'existe pas).</span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : emplacement des logs</summary>
+            <pre><code>tail -f /var/log/apache2/access.log</code></pre>
+            <p>
+              Notez la présence de l'<strong>User-Agent</strong> (type de
+              navigateur) sur la ligne. <kbd>Ctrl</kbd> + <kbd>C</kbd> arrête
+              le suivi.
+            </p>
+          </details>
+          <div class="q-sujet">
+            <p><span class="q-num">Q7</span>Copiez la ligne correspondant à l'erreur 404.</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q7">Rédiger ma réponse &rarr;</a></p>
+          </div>
+        </div>
+        <div class="atelier-terminal">
+          <div class="poste" id="poste">
+            <div class="poste-onglets" role="tablist" aria-label="Poste de travail">
+              <button type="button" role="tab" data-onglet="terminal" aria-selected="true">🖥️ Terminal</button>
+              <button type="button" role="tab" data-onglet="navigateur" aria-selected="false">🌐 Navigateur</button>
+            </div>
+            <div class="poste-panneau" data-panneau="terminal" role="tabpanel" aria-label="Terminal">
+              <div id="terminal-configuration"></div>
+            </div>
+            <div class="poste-panneau" data-panneau="navigateur" role="tabpanel" aria-label="Navigateur" hidden>
+              <div id="navigateur-configuration"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Comprendre « Permission denied »</h2>
+      <p>
+        Voici ce qu'affiche <code>ls -ld /var/www/html</code> juste après
+        l'installation d'Apache. Clique sur chaque morceau.
+      </p>
+      <div class="ls-decode" data-explication="ls-explication"><button type="button" class="p-type" data-texte="Le type d'élément : « d » pour un dossier (directory), « - » pour un fichier ordinaire.">d</button><button type="button" class="p-u" data-texte="Les droits du Propriétaire (user) : r = lecture, w = écriture, x = droit d'entrer dans le dossier. Ici, le propriétaire peut tout faire.">rwx</button><button type="button" class="p-g" data-texte="Les droits du Groupe (group) : lire et traverser le dossier, mais pas y écrire.">r-x</button><button type="button" class="p-o" data-texte="Les droits des Autres (other) : tous les autres comptes, dont etudiant et www-data (le compte qu'utilise Apache). Lire et traverser : oui. Écrire (créer, modifier, supprimer un fichier dans le dossier) : non.">r-x</button> <button type="button" data-texte="Le nombre de liens (on ne s'en sert pas dans ce TP).">2</button> <button type="button" data-texte="Le propriétaire du dossier. Tant que c'est root, seul root a le droit w : c'est ce que change chown.">root</button> <button type="button" data-texte="Le groupe du dossier.">root</button> <button type="button" data-texte="La taille d'un dossier (toujours 4096 octets ici).">4096</button> <button type="button" data-texte="La date de dernière modification.">Nov 19 10:42</button> <button type="button" data-texte="Le chemin du dossier : la racine du site web (DocumentRoot).">/var/www/html</button></div>
+      <p class="ls-explication" id="ls-explication" aria-live="polite"></p>
+
+      <h2>Calculateur de permissions</h2>
+      <p>
+        Coche les droits ou tape un nombre de trois chiffres : chaque chiffre
+        est la somme de <strong>4</strong> (r, lecture),
+        <strong>2</strong> (w, écriture) et <strong>1</strong> (x, exécution
+        ou, pour un dossier, droit de le traverser).
+      </p>
+      <div class="chmod-calc" id="chmod-calc" data-cible="/home/etudiant">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th></th><th>Lecture (r = 4)</th><th>Écriture (w = 2)</th><th>Exécution (x = 1)</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Propriétaire</td>
+                <td><input type="checkbox" data-qui="0" data-val="4" checked aria-label="Propriétaire : lecture" /></td>
+                <td><input type="checkbox" data-qui="0" data-val="2" checked aria-label="Propriétaire : écriture" /></td>
+                <td><input type="checkbox" data-qui="0" data-val="1" checked aria-label="Propriétaire : exécution" /></td></tr>
+              <tr><td>Groupe</td>
+                <td><input type="checkbox" data-qui="1" data-val="4" checked aria-label="Groupe : lecture" /></td>
+                <td><input type="checkbox" data-qui="1" data-val="2" aria-label="Groupe : écriture" /></td>
+                <td><input type="checkbox" data-qui="1" data-val="1" checked aria-label="Groupe : exécution" /></td></tr>
+              <tr><td>Autres</td>
+                <td><input type="checkbox" data-qui="2" data-val="4" aria-label="Autres : lecture" /></td>
+                <td><input type="checkbox" data-qui="2" data-val="2" aria-label="Autres : écriture" /></td>
+                <td><input type="checkbox" data-qui="2" data-val="1" aria-label="Autres : exécution" /></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="chmod-resultat">
+          <label>Octal<input name="octal" inputmode="numeric" maxlength="3" /></label>
+          <label>Chaîne ls -l<output name="chaine"></output></label>
+          <label>Commande<output name="cmd" class="cmd"></output></label>
+        </div>
+        <p style="text-align: center; margin: 0.8rem 0 0">
+          Essayer :
+          <button type="button" class="popup-btn" data-preset="750">750</button>
+          <button type="button" class="popup-btn" data-preset="751">751</button>
+          <button type="button" class="popup-btn" data-preset="755">755</button>
+          <button type="button" class="popup-btn" data-preset="644">644</button>
+        </p>
+      </div>
+
+      <div class="callout" style="margin-top: 1.4rem">
+        <h4>À retenir</h4>
+        <p>
+          Apache lit les fichiers du site avec le compte <code>www-data</code>,
+          qui fait partie des « Autres ». Pour envoyer un fichier au
+          navigateur, il lui faut le droit de lecture (<code>r</code>) sur ce
+          fichier et le droit de traverser (<code>x</code>) chacun des
+          dossiers du chemin. Sous Ubuntu, <code>adduser</code> crée le
+          dossier personnel en <code>750</code> (<code>drwxr-x---</code>).
+        </p>
+      </div>
+
+      <h2>Où Apache va-t-il chercher le fichier ?</h2>
+      <p>
+        Saisis le chemin d'une adresse (ce qui suit le nom de domaine) : l'outil
+        indique le fichier qu'Apache cherchera sur le disque du serveur simulé,
+        d'après la configuration <strong>chargée au dernier démarrage ou
+        rechargement</strong>.
+      </p>
+      <div class="resolveur" id="resolveur">
+        <form>
+          <input type="text" value="/" spellcheck="false" autocomplete="off" aria-label="Chemin de l'adresse" />
+          <button type="submit" class="btn">Traduire</button>
+        </form>
+        <p>
+          Essayer :
+          <button type="button" class="popup-btn" data-url="/">/</button>
+          <button type="button" class="popup-btn" data-url="/index.html">/index.html</button>
+          <button type="button" class="popup-btn" data-url="/test/">/test/</button>
+          <button type="button" class="popup-btn" data-url="/test/index.html">/test/index.html</button>
+          <button type="button" class="popup-btn" data-url="/page-inconnue.html">/page-inconnue.html</button>
+        </p>
+        <div><small>Fichier cherché sur le disque :</small><div class="chemin" id="resolveur-fichier">—</div></div>
+        <p id="resolveur-explication" aria-live="polite"></p>
+      </div>
+
+      <h2>Lire une ligne du journal d'accès</h2>
+      <p>
+        Chaque requête reçue ajoute une ligne à
+        <code>/var/log/apache2/access.log</code>. Clique sur chaque morceau.
+      </p>
+      <div class="ls-decode" data-explication="log-explication"><button type="button" class="p-type" data-texte="L'adresse IP du client qui a envoyé la requête. Avec Killercoda, c'est celle du proxy qui relaie votre navigateur ; avec curl localhost, c'est ::1 (la machine elle-même, en IPv6).">10.244.0.1</button> <button type="button" data-nom="- (1er)" data-texte="L'identité « ident » du client : jamais renseignée, d'où le tiret.">-</button> <button type="button" data-nom="- (2e)" data-texte="Le nom d'utilisateur si la page est protégée par mot de passe (partie 7), sinon un tiret.">-</button> <button type="button" class="p-g" data-texte="La date et l'heure de la requête, avec le décalage horaire (+0000 = heure UTC).">[19/Nov/2026:10:42:07 +0000]</button> <button type="button" class="p-u" data-texte="La ligne de requête : la méthode (GET = lire une page), le chemin demandé, puis la version du protocole (HTTP/1.1).">"GET /page-inconnue.html HTTP/1.1"</button> <button type="button" class="p-o" data-texte="Le code de statut de la réponse : 200 = OK, 403 = accès interdit, 404 = introuvable...">404</button> <button type="button" data-texte="La taille de la réponse envoyée, en octets.">437</button> <button type="button" data-texte="Le Referer : la page d'où venait le visiteur (« - » s'il a tapé l'adresse lui-même).">"-"</button> <button type="button" class="p-g" data-nom="User-Agent" data-texte="Le User-Agent : la carte d'identité du logiciel client (navigateur, version, système). Avec curl, on lit simplement curl/8.5.0.">"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"</button></div>
+      <p class="ls-explication" id="log-explication" aria-live="polite"></p>
+
+      <p style="text-align: center; margin-top: 2rem">
+        <a class="btn" href="securisation.html">Passer à la sécurisation &rarr;</a>
+      </p>
+    </main>
+
+    <footer class="site-footer">
+      R1.13 Hébergement - BUT MMI 1 · IUT de Béziers · TP3 Serveur Web Apache
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/serveur.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/navigateur.js"></script>
+    <script src="js/configuration.js"></script>
+  </body>
+</html>
