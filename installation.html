@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Installation - R1.13 TP3</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect x=%278%27 y=%2716%27 width=%2784%27 height=%2768%27 rx=%2710%27 fill=%27%231c2333%27/%3E%3Cpath d=%27M24 38 L38 50 L24 62%27 stroke=%27%236ee7a8%27 stroke-width=%278%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M46 64 H74%27 stroke=%27%237cb7ff%27 stroke-width=%278%27 stroke-linecap=%27round%27/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="installation">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header">
+      <nav class="nav-wrap">
+        <a class="brand" href="index.html"
+          ><img src="img/logo_iut.jpg" alt="" />
+          <span
+            >R1.13 - Hébergement
+            <small>TP3 · Serveur Web Apache</small></span
+          ><img src="img/logo_mmi.jpg" alt="" />
+        </a>
+        <div class="site-nav">
+          <a href="index.html" data-nav="index">Accueil</a>
+          <a href="prerequis.html" data-nav="prerequis">Prise en main</a>
+          <a href="installation.html" data-nav="installation">Installation</a>
+          <a href="configuration.html" data-nav="configuration">Configuration</a>
+          <a href="securisation.html" data-nav="securisation">Sécurisation</a>
+          <a href="livrable.html" data-nav="livrable">Livrable</a>
+          <a href="memo.html" data-nav="memo">Mémo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <p class="eyebrow">Parties 2 et 3</p>
+      <h1>Installation du service Web et accès au site</h1>
+      <p class="lede">
+        Installer le serveur HTTP Apache sur la machine Ubuntu, vérifier qu'il
+        tourne, puis l'atteindre depuis votre navigateur. Les questions
+        <strong>Q1 à Q3</strong> sont à rédiger dans la page
+        <a href="livrable.html">Livrable</a>.
+      </p>
+
+      <div class="callout warn">
+        <p>
+          Entraîne-toi sur le serveur simulé (les actions se cochent toutes
+          seules), puis <strong>refais tout dans Killercoda</strong> : c'est
+          ce serveur-là qui servira aux captures d'écran du livrable.
+        </p>
+      </div>
+
+      <div class="atelier">
+        <div>
+          <h2 style="margin-top: 0">2. Installation du service Web</h2>
+          <p>
+            Avant d'installer Apache, il faut mettre à jour l'index des
+            paquets.
+          </p>
+          <ol class="actions">
+            <li data-mission="i-update"><span><strong>Mettez à jour l'index des paquets.</strong></span></li>
+            <li data-mission="i-install"><span><strong>Installez le paquet <code>apache2</code>.</strong></span></li>
+            <li data-mission="i-status"><span><strong>Vérifiez que le service est lancé.</strong></span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : commandes APT et systemd</summary>
+            <p>
+              Pour mettre à jour : <code>apt update</code>. Pour installer :
+              <code>apt install apache2</code> (répondre <kbd>Y</kbd> ou
+              <kbd>Entrée</kbd> à la question). Pour le statut :
+            </p>
+            <pre><code>systemctl status apache2</code></pre>
+          </details>
+          <div class="q-sujet">
+            <p><span class="q-num">Q1</span>Quelle commande avez-vous utilisée pour la mise à jour ?</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q1">Rédiger ma réponse &rarr;</a></p>
+          </div>
+          <div class="q-sujet">
+            <p><span class="q-num">Q2</span>Que signifie le statut « active (running) » ?</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q2">Rédiger ma réponse &rarr;</a></p>
+          </div>
+
+          <h2>3. Accéder à votre site Web (exposition)</h2>
+          <p>
+            Killercoda permet d'ouvrir un « tunnel » pour voir le site
+            distant.
+          </p>
+          <ol class="actions">
+            <li data-mission="i-port"><span><strong>Cherchez le menu « Traffic / Ports »</strong> en haut à droite et <strong>entrez le numéro de port : 80</strong>.
+              <button type="button" class="popup-btn" data-ouvrir-onglet="navigateur">🌐 Ouvrir le navigateur</button></span></li>
+            <li data-mission="i-itworks"><span><strong>Affichez la page d'accueil d'Apache</strong> (« It works! »).</span></li>
+            <li data-mission="i-curl"><span><strong>Depuis le terminal du serveur</strong>, interrogez aussi votre site : <code>curl localhost</code>.</span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : le port HTTP par défaut</summary>
+            <p>
+              Le port 80 est le standard pour le Web non sécurisé. L'URL est
+              complexe car elle passe par un proxy Killercoda pour atteindre
+              votre machine cloud.
+            </p>
+          </details>
+          <div class="q-sujet">
+            <p><span class="q-num">Q3</span>Regardez l'URL générée. Expliquez pourquoi ce n'est pas « localhost ».</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q3">Rédiger ma réponse &rarr;</a></p>
+          </div>
+        </div>
+        <div class="atelier-terminal">
+          <div class="poste" id="poste">
+            <div class="poste-onglets" role="tablist" aria-label="Poste de travail">
+              <button type="button" role="tab" data-onglet="terminal" aria-selected="true">🖥️ Terminal</button>
+              <button type="button" role="tab" data-onglet="navigateur" aria-selected="false">🌐 Navigateur</button>
+            </div>
+            <div class="poste-panneau" data-panneau="terminal" role="tabpanel" aria-label="Terminal">
+              <div id="terminal-installation"></div>
+            </div>
+            <div class="poste-panneau" data-panneau="navigateur" role="tabpanel" aria-label="Navigateur" hidden>
+              <div id="navigateur-installation"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Comprendre la sortie de <code>systemctl status</code></h2>
+      <p>Clique sur chaque morceau pour savoir ce qu'il signifie.</p>
+      <div class="ls-decode multi" data-explication="status-explication"><button type="button" class="p-u" data-nom="●" data-texte="Le point coloré résume l'état du service : vert quand il tourne, gris (○) quand il est arrêté, rouge (×) quand il a échoué.">●</button> <button type="button" data-texte="Le nom de l'unité systemd : le service apache2, suivi de sa description.">apache2.service - The Apache HTTP Server</button><br />     <button type="button" class="p-g" data-texte="Le service est connu de systemd (loaded), et « enabled » indique qu'il sera lancé automatiquement au démarrage de la machine.">Loaded: loaded (/usr/lib/systemd/system/apache2.service; enabled; preset: enabled)</button><br />     <button type="button" class="p-u" data-texte="L'état actuel du service. Regarde séparément les deux mots « active » et « running » pour répondre à Q2 avec tes propres mots.">Active: active (running)</button> <button type="button" data-texte="Depuis quand le service est dans cet état.">since Thu 2026-11-19 10:42:07 UTC; 2min 13s ago</button><br />   <button type="button" class="p-o" data-texte="Le numéro du processus principal d'Apache (PID, Process ID). Les autres processus apache2, listés sous CGroup, traitent les requêtes avec le compte www-data.">Main PID: 2731 (apache2)</button><br /><button type="button" class="p-type" data-nom="Journal" data-texte="Les dernières lignes du journal du service : ici, son démarrage réussi par systemd.">Nov 19 10:42:07 ubuntu systemd[1]: Started apache2.service - The Apache HTTP Server.</button></div>
+      <p class="ls-explication" id="status-explication" aria-live="polite"></p>
+
+      <h2>Mini-jeu : quel port pour quel service ?</h2>
+      <p>
+        Sur une machine, chaque service réseau « écoute » sur un numéro de
+        port. Associe chaque service à son port standard.
+      </p>
+      <div class="tri" data-score="ports-score">
+        <div class="tri-item" data-type="80" data-explication="HTTP, le Web non sécurisé, utilise le port 80 : c'est celui d'Apache dans ce TP.">
+          <code>HTTP (site web non sécurisé)</code>
+          <button type="button" data-choix="21">21</button><button type="button" data-choix="22">22</button><button type="button" data-choix="53">53</button><button type="button" data-choix="80">80</button><button type="button" data-choix="443">443</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="443" data-explication="HTTPS (HTTP chiffré par TLS) utilise le port 443 : c'est le cas de l'adresse que Killercoda vous donne.">
+          <code>HTTPS (site web sécurisé)</code>
+          <button type="button" data-choix="21">21</button><button type="button" data-choix="22">22</button><button type="button" data-choix="53">53</button><button type="button" data-choix="80">80</button><button type="button" data-choix="443">443</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="22" data-explication="SSH, le terminal à distance chiffré, écoute sur le port 22.">
+          <code>SSH (terminal à distance)</code>
+          <button type="button" data-choix="21">21</button><button type="button" data-choix="22">22</button><button type="button" data-choix="53">53</button><button type="button" data-choix="80">80</button><button type="button" data-choix="443">443</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="21" data-explication="FTP, le transfert de fichiers « historique », utilise le port 21.">
+          <code>FTP (transfert de fichiers)</code>
+          <button type="button" data-choix="21">21</button><button type="button" data-choix="22">22</button><button type="button" data-choix="53">53</button><button type="button" data-choix="80">80</button><button type="button" data-choix="443">443</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="53" data-explication="DNS, qui traduit un nom de domaine en adresse IP, utilise le port 53.">
+          <code>DNS (nom de domaine → adresse IP)</code>
+          <button type="button" data-choix="21">21</button><button type="button" data-choix="22">22</button><button type="button" data-choix="53">53</button><button type="button" data-choix="80">80</button><button type="button" data-choix="443">443</button>
+          <span class="verdict"></span>
+        </div>
+      </div>
+      <p class="score" id="ports-score" aria-live="polite"></p>
+
+      <h2>Le trajet de votre requête</h2>
+      <p>
+        Deux façons d'atteindre le même Apache : depuis votre navigateur, ou
+        depuis le terminal de la machine Ubuntu elle-même.
+      </p>
+      <div class="flux" aria-label="Trajet d'une requête depuis le navigateur">
+        <div class="flux-etape"><strong>💻 Votre navigateur</strong><small>sur votre ordinateur</small></div>
+        <div class="flux-fleche"><span>→</span>https://…-80.…killercoda.com</div>
+        <div class="flux-etape"><strong>☁️ Proxy Killercoda</strong><small>sur Internet</small></div>
+        <div class="flux-fleche"><span>→</span>port 80</div>
+        <div class="flux-etape serveur"><strong>🐧 Machine Ubuntu</strong><small>Apache écoute sur le port 80</small></div>
+      </div>
+      <div class="flux" aria-label="Trajet d'une requête depuis le terminal du serveur">
+        <div class="flux-etape serveur"><strong>🐧 Terminal de la machine Ubuntu</strong><small>curl localhost</small></div>
+        <div class="flux-fleche"><span>→</span>port 80</div>
+        <div class="flux-etape serveur"><strong>🐧 La même machine Ubuntu</strong><small>Apache écoute sur le port 80</small></div>
+      </div>
+      <p>
+        Qui est « localhost » pour le terminal de la machine Ubuntu ? Et pour
+        votre navigateur, qui tourne sur votre ordinateur ? Servez-vous de ce
+        schéma pour répondre à Q3.
+      </p>
+
+      <h2>Vocabulaire</h2>
+      <div class="flip-grid">
+        <button type="button" class="flip"><span class="flip-inner"><span class="flip-face"><strong>Paquet</strong><small>apt install apache2</small></span><span class="flip-face flip-back">Un logiciel prêt à installer (ici <code>apache2</code>), accompagné de la liste des autres paquets dont il a besoin : APT les installe tous ensemble.</span></span></button>
+        <button type="button" class="flip"><span class="flip-inner"><span class="flip-face"><strong>Index des paquets</strong><small>apt update</small></span><span class="flip-face flip-back">La liste des paquets disponibles et de leurs versions, téléchargée depuis les dépôts d'Ubuntu. <code>apt install</code> s'en sert pour trouver le logiciel demandé.</span></span></button>
+        <button type="button" class="flip"><span class="flip-inner"><span class="flip-face"><strong>Service (démon)</strong><small>systemctl</small></span><span class="flip-face flip-back">Un programme qui tourne en arrière-plan, sans fenêtre, en attendant des demandes. <code>systemctl</code> le démarre, l'arrête, le recharge ou affiche son état.</span></span></button>
+        <button type="button" class="flip"><span class="flip-inner"><span class="flip-face"><strong>Port</strong><small>80, 443, 22...</small></span><span class="flip-face flip-back">Un numéro (de 0 à 65535) qui désigne le service à joindre sur une machine : une même adresse IP peut héberger un serveur web, un serveur SSH...</span></span></button>
+        <button type="button" class="flip"><span class="flip-inner"><span class="flip-face"><strong>root</strong><small>invite en #</small></span><span class="flip-face flip-back">Le super-utilisateur, administrateur de la machine : il a tous les droits. Installer un paquet ou piloter un service lui est réservé.</span></span></button>
+        <button type="button" class="flip"><span class="flip-inner"><span class="flip-face"><strong>localhost</strong><small>127.0.0.1</small></span><span class="flip-face flip-back">Le nom qui désigne « la machine elle-même », celle sur laquelle le programme s'exécute (adresse 127.0.0.1, ou ::1).</span></span></button>
+      </div>
+
+      <p style="text-align: center; margin-top: 2rem">
+        <a class="btn" href="configuration.html">Passer à la configuration &rarr;</a>
+      </p>
+    </main>
+
+    <footer class="site-footer">
+      R1.13 Hébergement - BUT MMI 1 · IUT de Béziers · TP3 Serveur Web Apache
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/serveur.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/navigateur.js"></script>
+    <script src="js/installation.js"></script>
+  </body>
+</html>

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prise en main - R1.13 TP3</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect x=%278%27 y=%2716%27 width=%2784%27 height=%2768%27 rx=%2710%27 fill=%27%231c2333%27/%3E%3Cpath d=%27M24 38 L38 50 L24 62%27 stroke=%27%236ee7a8%27 stroke-width=%278%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M46 64 H74%27 stroke=%27%237cb7ff%27 stroke-width=%278%27 stroke-linecap=%27round%27/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="prerequis">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header">
+      <nav class="nav-wrap">
+        <a class="brand" href="index.html"
+          ><img src="img/logo_iut.jpg" alt="" />
+          <span
+            >R1.13 - Hébergement
+            <small>TP3 · Serveur Web Apache</small></span
+          ><img src="img/logo_mmi.jpg" alt="" />
+        </a>
+        <div class="site-nav">
+          <a href="index.html" data-nav="index">Accueil</a>
+          <a href="prerequis.html" data-nav="prerequis">Prise en main</a>
+          <a href="installation.html" data-nav="installation">Installation</a>
+          <a href="configuration.html" data-nav="configuration">Configuration</a>
+          <a href="securisation.html" data-nav="securisation">Sécurisation</a>
+          <a href="livrable.html" data-nav="livrable">Livrable</a>
+          <a href="memo.html" data-nav="memo">Mémo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <p class="eyebrow">Partie 1</p>
+      <h1>Prise en main de l'environnement</h1>
+      <p class="lede">
+        Le serveur web que vous allez installer tourne sur une machine Ubuntu
+        distante, prêtée par Killercoda : un environnement « bac à sable »
+        auquel on accède depuis le navigateur.
+      </p>
+
+      <div class="callout warn">
+        <p>
+          <strong>L'environnement est éphémère. Ne fermez pas votre onglet !</strong>
+          Quand la session Killercoda se termine, la machine est effacée avec
+          tout ce que vous y avez installé et configuré. Faites vos captures
+          d'écran au fur et à mesure.
+        </p>
+      </div>
+
+      <h2>1.1 Le bac à sable Ubuntu (Killercoda)</h2>
+      <div class="scenario-toolbar">
+        <strong>Mise en route</strong>
+        <div class="progress"><span data-progress></span></div>
+        <span class="progress-text" data-progress-text></span>
+      </div>
+
+      <section class="scenario" id="etape-1" data-etape>
+        <div class="scenario-head" role="button" tabindex="0" aria-expanded="false">
+          <input type="checkbox" class="scenario-check" aria-label="Étape 1 terminée" />
+          <span class="scenario-num">1</span>
+          <h3>Ouvrir le bac à sable Ubuntu</h3>
+          <span class="scenario-caret" aria-hidden="true">▶</span>
+        </div>
+        <div class="scenario-body">
+          <ol>
+            <li>
+              <strong>Aller sur le playground Ubuntu de Killercoda :</strong>
+              <a class="etape-lien" href="https://killercoda.com/playgrounds/scenario/ubuntu" target="_blank" rel="noopener">Killercoda Ubuntu</a>
+            </li>
+            <li>
+              <strong>Se connecter</strong> si le site le demande (compte
+              gratuit).
+            </li>
+            <li>
+              <strong>Patienter</strong> pendant le démarrage de la machine :
+              un terminal noir s'affiche, prêt à recevoir des commandes.
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="scenario" id="etape-2" data-etape>
+        <div class="scenario-head" role="button" tabindex="0" aria-expanded="false">
+          <input type="checkbox" class="scenario-check" aria-label="Étape 2 terminée" />
+          <span class="scenario-num">2</span>
+          <h3>Repérer l'interface</h3>
+          <span class="scenario-caret" aria-hidden="true">▶</span>
+        </div>
+        <div class="scenario-body">
+          <ul>
+            <li>
+              <strong>Le terminal</strong> : il est connecté à une vraie
+              machine Linux (Ubuntu), située dans un centre de données et non
+              sur votre ordinateur.
+            </li>
+            <li>
+              <strong>Le menu en haut à droite</strong> (icône ☰) : la
+              rubrique <em>Traffic / Ports</em> ouvre un onglet vers un port de
+              la machine. Elle servira à voir votre site (partie 3).
+            </li>
+          </ul>
+          <div class="callout">
+            <p>
+              Dans Killercoda, vous êtes connecté en <strong>root</strong>,
+              l'administrateur de la machine : l'invite se termine par
+              <code>#</code> (au lieu de <code>$</code> pour un utilisateur
+              ordinaire). Root a tous les droits : prudence avec
+              <code>rm</code> !
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scenario" id="etape-3" data-etape>
+        <div class="scenario-head" role="button" tabindex="0" aria-expanded="false">
+          <input type="checkbox" class="scenario-check" aria-label="Étape 3 terminée" />
+          <span class="scenario-num">3</span>
+          <h3>Premières commandes dans Killercoda</h3>
+          <span class="scenario-caret" aria-hidden="true">▶</span>
+        </div>
+        <div class="scenario-body">
+          <p>
+            Entraînez-vous d'abord dans le terminal simulé ci-dessous (partie
+            1.2), puis tapez les deux commandes dans le terminal de Killercoda
+            et cochez cette étape.
+          </p>
+        </div>
+      </section>
+
+      <h2>1.2 Vérifier l'environnement</h2>
+      <div class="atelier">
+        <div>
+          <p>
+            Fais d'abord chaque action dans le terminal d'entraînement : elle
+            se coche toute seule. Refais-la ensuite dans Killercoda.
+          </p>
+          <ol class="actions">
+            <li data-mission="p-whoami"><span><strong>Vérifiez votre identité</strong> avec la commande <code>whoami</code>. Vous devez être <strong>root</strong>.</span></li>
+            <li data-mission="p-os"><span><strong>Vérifiez la version du système.</strong></span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : commande pour vérifier l'OS</summary>
+            <p>
+              Utilisez la commande <code>cat</code> pour lire le fichier
+              d'information système :
+            </p>
+            <pre><code>cat /etc/os-release</code></pre>
+          </details>
+          <div class="callout">
+            <p>
+              <strong>Un seul serveur pour tout le TP :</strong> le terminal
+              d'entraînement de chaque page est relié à la même machine
+              simulée. Ce que vous installez ici sera encore là sur les pages
+              suivantes, comme dans Killercoda tant que l'onglet reste ouvert.
+            </p>
+          </div>
+        </div>
+        <div class="atelier-terminal">
+          <div id="terminal-prise-en-main"></div>
+        </div>
+      </div>
+
+      <h2>1.3 Votre ordinateur</h2>
+      <p>
+        Plus loin dans le TP, vous observerez les échanges entre le navigateur
+        et le serveur avec les <strong>outils de développement</strong> du
+        navigateur, puis vous ferez des captures d'écran. Les raccourcis
+        dépendent de votre système :
+      </p>
+      <div class="os-choix">
+        <button type="button" class="os-btn" data-os-btn="windows">
+          <img src="img/logo_windows.png" alt="" />
+          <span><strong>Windows</strong><small>Chrome, Edge ou Firefox</small></span>
+        </button>
+        <button type="button" class="os-btn" data-os-btn="macos">
+          <img src="img/logo_macos.png" alt="" />
+          <span><strong>macOS</strong><small>Chrome, Safari ou Firefox</small></span>
+        </button>
+      </div>
+      <section data-os-bloc="windows">
+        <div class="callout">
+          <ul>
+            <li>Ouvrir les outils de développement : <kbd>F12</kbd> (ou <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>I</kbd>), puis l'onglet <strong>Réseau</strong> (<em>Network</em>).</li>
+            <li>Capture d'écran d'une zone : <kbd>Windows</kbd> + <kbd>Maj</kbd> + <kbd>S</kbd>.</li>
+          </ul>
+        </div>
+      </section>
+      <section data-os-bloc="macos" hidden>
+        <div class="callout">
+          <ul>
+            <li>Ouvrir les outils de développement : <kbd>⌘</kbd> + <kbd>⌥</kbd> + <kbd>I</kbd>, puis l'onglet <strong>Réseau</strong> (<em>Network</em>). Dans Safari, activer d'abord <em>Réglages &gt; Avancées &gt; Afficher les fonctionnalités pour les développeurs web</em>.</li>
+            <li>Capture d'écran d'une zone : <kbd>⌘</kbd> + <kbd>Maj</kbd> + <kbd>4</kbd>.</li>
+          </ul>
+        </div>
+      </section>
+      <p class="hint" style="color: var(--text-muted); font-size: 0.9rem">
+        Ton choix est mémorisé : les pages Sécurisation et Livrable
+        afficheront les raccourcis de ton système.
+      </p>
+
+      <p style="text-align: center; margin-top: 2rem">
+        <a class="btn" href="installation.html">Environnement prêt ? Installer Apache &rarr;</a>
+      </p>
+    </main>
+
+    <footer class="site-footer">
+      R1.13 Hébergement - BUT MMI 1 · IUT de Béziers · TP3 Serveur Web Apache
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/serveur.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/prerequis.js"></script>
+  </body>
+</html>

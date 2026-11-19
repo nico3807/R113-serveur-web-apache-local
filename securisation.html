@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sécurisation - R1.13 TP3</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect x=%278%27 y=%2716%27 width=%2784%27 height=%2768%27 rx=%2710%27 fill=%27%231c2333%27/%3E%3Cpath d=%27M24 38 L38 50 L24 62%27 stroke=%27%236ee7a8%27 stroke-width=%278%27 fill=%27none%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3Cpath d=%27M46 64 H74%27 stroke=%27%237cb7ff%27 stroke-width=%278%27 stroke-linecap=%27round%27/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-page="securisation">
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+
+    <header class="site-header">
+      <nav class="nav-wrap">
+        <a class="brand" href="index.html"
+          ><img src="img/logo_iut.jpg" alt="" />
+          <span
+            >R1.13 - Hébergement
+            <small>TP3 · Serveur Web Apache</small></span
+          ><img src="img/logo_mmi.jpg" alt="" />
+        </a>
+        <div class="site-nav">
+          <a href="index.html" data-nav="index">Accueil</a>
+          <a href="prerequis.html" data-nav="prerequis">Prise en main</a>
+          <a href="installation.html" data-nav="installation">Installation</a>
+          <a href="configuration.html" data-nav="configuration">Configuration</a>
+          <a href="securisation.html" data-nav="securisation">Sécurisation</a>
+          <a href="livrable.html" data-nav="livrable">Livrable</a>
+          <a href="memo.html" data-nav="memo">Mémo</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="contenu">
+      <p class="eyebrow">Parties 7 et 8</p>
+      <h1>Sécurisation et personnalisation des erreurs</h1>
+      <p class="lede">
+        Protéger un dossier par mot de passe, remplacer la page d'erreur 404
+        par la vôtre, puis observer les échanges entre le navigateur et le
+        serveur. Les questions <strong>Q8 à Q10</strong> sont à rédiger dans
+        la page <a href="livrable.html">Livrable</a>.
+      </p>
+
+      <div class="callout warn">
+        <p>
+          Entraîne-toi sur le serveur simulé (les actions se cochent toutes
+          seules), puis <strong>refais tout dans Killercoda</strong> : les
+          captures d'écran du livrable viennent des outils de développement de
+          ton vrai navigateur, sur ton site Killercoda.
+        </p>
+      </div>
+
+      <div class="atelier">
+        <div>
+          <h2 style="margin-top: 0">7. Sécuriser un dossier (authentification)</h2>
+          <p>
+            Mise en place d'une « Basic Authentication » sur le dossier
+            <code>/admin</code>.
+          </p>
+          <ol class="actions">
+            <li data-mission="s-admin"><span><strong>Créez le dossier <code>/var/www/html/admin</code></strong> avec une page <code>index.html</code>.</span></li>
+            <li data-mission="s-override"><span><strong>Autorisez le <code>AllowOverride All</code></strong> dans <code>apache2.conf</code> (bloc <code>&lt;Directory /var/www/&gt;</code>).</span></li>
+            <li data-mission="s-htaccess"><span><strong>Créez le fichier <code>.htaccess</code></strong> dans <code>/admin</code>.</span></li>
+            <li data-mission="s-htpasswd"><span><strong>Générez le fichier de mots de passe</strong> avec <code>htpasswd</code>.</span></li>
+            <li data-mission="s-restart"><span><strong>Rechargez (ou redémarrez) Apache</strong> pour qu'il relise <code>apache2.conf</code>.</span></li>
+            <li data-mission="s-401"><span><strong>Ouvrez <code>.../admin/</code></strong> dans le navigateur : une fenêtre de connexion apparaît.
+              <button type="button" class="popup-btn" data-ouvrir-onglet="navigateur">🌐 Ouvrir le navigateur</button></span></li>
+            <li data-mission="s-200"><span><strong>Connectez-vous</strong> avec le login et le mot de passe choisis.</span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : syntaxe .htaccess</summary>
+            <pre><code>AuthType Basic
+AuthName "Zone Admin"
+AuthUserFile /etc/apache2/.htpasswd
+Require valid-user</code></pre>
+            <p>
+              La commande pour créer l'utilisateur :
+              <code>htpasswd -c /etc/apache2/.htpasswd [login]</code>.
+            </p>
+          </details>
+          <details class="indice">
+            <summary>Indice : trouver AllowOverride dans apache2.conf</summary>
+            <p>
+              <code>nano /etc/apache2/apache2.conf</code>, puis descendez avec
+              les flèches jusqu'au bloc <code>&lt;Directory /var/www/&gt;</code>
+              et remplacez <code>None</code> par <code>All</code> sur la ligne
+              <code>AllowOverride</code> de ce bloc (pas celui de
+              <code>&lt;Directory /&gt;</code> !). Dans un navigateur,
+              n'utilisez pas <kbd>Ctrl</kbd> + <kbd>W</kbd> pour chercher :
+              ce raccourci ferme l'onglet.
+            </p>
+          </details>
+          <div class="q-sujet">
+            <p><span class="q-num">Q8</span>Que se passe-t-il quand vous ouvrez <code>.../admin</code>, avant puis après avoir saisi vos identifiants ? Quel code HTTP le serveur renvoie-t-il tant que vous n'êtes pas authentifié ? Pourquoi a-t-il fallu passer <code>AllowOverride</code> à <code>All</code> ?</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q8">Rédiger ma réponse &rarr;</a></p>
+          </div>
+
+          <h2>8. Personnalisation des erreurs (UX)</h2>
+          <p>
+            Soignons l'expérience utilisateur en remplaçant la page 404
+            austère.
+          </p>
+          <ol class="actions">
+            <li data-mission="s-oups"><span><strong>Créez <code>/var/www/html/oups.html</code></strong> avec un design MMI.</span></li>
+            <li data-mission="s-errordoc"><span><strong>Configurez-la dans</strong> <code>/etc/apache2/sites-available/000-default.conf</code>.</span></li>
+            <li data-mission="s-reload"><span><strong>Rechargez Apache.</strong></span></li>
+            <li data-mission="s-perso404"><span><strong>Testez avec une URL inexistante.</strong></span></li>
+          </ol>
+          <details class="indice">
+            <summary>Indice : directive ErrorDocument</summary>
+            <p>Ajoutez cette ligne dans le bloc <code>&lt;VirtualHost *:80&gt;</code> :</p>
+            <pre><code>ErrorDocument 404 /oups.html</code></pre>
+          </details>
+          <div class="q-sujet">
+            <p><span class="q-num">Q9</span>Quelle ligne avez-vous ajoutée, et dans quel fichier ? Quel code de statut le serveur renvoie-t-il avec votre page <code>oups.html</code> ?</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q9">Rédiger ma réponse &rarr;</a></p>
+          </div>
+
+          <h2>Observer les échanges</h2>
+          <p>
+            Le navigateur envoie une <strong>requête</strong> HTTP, le serveur
+            renvoie une <strong>réponse</strong> avec un code de statut et des
+            en-têtes. Les outils de développement les affichent dans l'onglet
+            <strong>Réseau</strong>.
+          </p>
+          <ol class="actions">
+            <li data-mission="s-devtools"><span><strong>Ouvrez l'onglet Réseau</strong> (bouton 🛠 Réseau du navigateur d'entraînement).</span></li>
+            <li data-mission="s-net404"><span><strong>Chargez une adresse inexistante</strong> : la requête en échec 404 apparaît en rouge.</span></li>
+            <li data-mission="s-entetes"><span><strong>Cliquez sur une requête réussie (200)</strong> pour lire ses en-têtes : <code>User-Agent</code> et <code>Content-Type</code>.</span></li>
+          </ol>
+          <section data-os-bloc="windows">
+            <p style="font-size: 0.92rem">
+              Dans votre vrai navigateur (Windows) : <kbd>F12</kbd> ou
+              <kbd>Ctrl</kbd> + <kbd>Maj</kbd> + <kbd>I</kbd>, onglet
+              <strong>Réseau</strong>, puis rechargez la page
+              (<kbd>F5</kbd>).
+            </p>
+          </section>
+          <section data-os-bloc="macos" hidden>
+            <p style="font-size: 0.92rem">
+              Dans votre vrai navigateur (macOS) : <kbd>⌘</kbd> + <kbd>⌥</kbd>
+              + <kbd>I</kbd>, onglet <strong>Réseau</strong>, puis rechargez la
+              page (<kbd>⌘</kbd> + <kbd>R</kbd>).
+            </p>
+          </section>
+          <div class="q-sujet">
+            <p><span class="q-num">Q10</span>Dans l'onglet Réseau, comparez une requête réussie et la requête en erreur 404 : quel est le code de statut de chacune ? Que contiennent les en-têtes <code>User-Agent</code> et <code>Content-Type</code> de la requête réussie ?</p>
+            <p class="q-lien"><a href="livrable.html#bloc-q10">Rédiger ma réponse &rarr;</a></p>
+          </div>
+        </div>
+        <div class="atelier-terminal">
+          <div class="poste" id="poste">
+            <div class="poste-onglets" role="tablist" aria-label="Poste de travail">
+              <button type="button" role="tab" data-onglet="terminal" aria-selected="true">🖥️ Terminal</button>
+              <button type="button" role="tab" data-onglet="navigateur" aria-selected="false">🌐 Navigateur</button>
+            </div>
+            <div class="poste-panneau" data-panneau="terminal" role="tabpanel" aria-label="Terminal">
+              <div id="terminal-securisation"></div>
+            </div>
+            <div class="poste-panneau" data-panneau="navigateur" role="tabpanel" aria-label="Navigateur" hidden>
+              <div id="navigateur-securisation"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2>Lire un fichier .htaccess</h2>
+      <p>Clique sur chaque ligne pour savoir ce qu'elle demande à Apache.</p>
+      <div class="ls-decode multi" data-explication="htaccess-explication"><button type="button" class="p-u" data-texte="Le type d'authentification : « Basic », le plus simple. Le navigateur affiche une fenêtre de connexion et renvoie le login et le mot de passe à chaque requête (simplement encodés, pas chiffrés : à réserver à un site en HTTPS).">AuthType Basic</button><br /><button type="button" class="p-g" data-texte="Le nom de la zone protégée (realm), affiché par certains navigateurs dans la fenêtre de connexion.">AuthName "Zone Admin"</button><br /><button type="button" class="p-type" data-texte="Le fichier qui contient les comptes autorisés, créé par htpasswd. On le range hors du dossier web (/var/www/html), pour qu'il ne soit jamais téléchargeable.">AuthUserFile /etc/apache2/.htpasswd</button><br /><button type="button" class="p-o" data-texte="Qui a le droit d'entrer : n'importe quel compte présent dans le fichier de mots de passe (valid-user). On peut aussi écrire « Require user admin » pour un seul compte.">Require valid-user</button></div>
+      <p class="ls-explication" id="htaccess-explication" aria-live="polite"></p>
+
+      <h2>Mini-jeu : quel code de statut ?</h2>
+      <p>
+        Pour chaque situation rencontrée dans ce TP, quel code de statut
+        Apache renvoie-t-il ?
+      </p>
+      <div class="tri" data-score="codes-score">
+        <div class="tri-item" data-type="200" data-explication="200 OK : la ressource existe, le serveur l'envoie.">
+          <code>La page existe et Apache a le droit de la lire.</code>
+          <button type="button" data-choix="200">200</button><button type="button" data-choix="301">301</button><button type="button" data-choix="401">401</button><button type="button" data-choix="403">403</button><button type="button" data-choix="404">404</button><button type="button" data-choix="500">500</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="301" data-explication="301 Moved Permanently : /test est un dossier, Apache indique l'adresse correcte /test/ et le navigateur la suit tout seul.">
+          <code>On demande /test (sans « / » final), qui est un dossier.</code>
+          <button type="button" data-choix="200">200</button><button type="button" data-choix="301">301</button><button type="button" data-choix="401">401</button><button type="button" data-choix="403">403</button><button type="button" data-choix="404">404</button><button type="button" data-choix="500">500</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="401" data-explication="401 Unauthorized : il faut s'authentifier. La réponse contient l'en-tête WWW-Authenticate, qui déclenche la fenêtre de connexion.">
+          <code>Le dossier /admin demande un identifiant et un mot de passe.</code>
+          <button type="button" data-choix="200">200</button><button type="button" data-choix="301">301</button><button type="button" data-choix="401">401</button><button type="button" data-choix="403">403</button><button type="button" data-choix="404">404</button><button type="button" data-choix="500">500</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="403" data-explication="403 Forbidden : la ressource existe, mais l'accès est interdit (droits sur le disque, ou règle Require de la configuration).">
+          <code>www-data n'a pas le droit de traverser /home/etudiant.</code>
+          <button type="button" data-choix="200">200</button><button type="button" data-choix="301">301</button><button type="button" data-choix="401">401</button><button type="button" data-choix="403">403</button><button type="button" data-choix="404">404</button><button type="button" data-choix="500">500</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="404" data-explication="404 Not Found : aucun fichier ne correspond à l'adresse. Avec ErrorDocument, c'est votre page oups.html qui s'affiche, mais le code reste 404.">
+          <code>L'adresse demandée ne correspond à aucun fichier.</code>
+          <button type="button" data-choix="200">200</button><button type="button" data-choix="301">301</button><button type="button" data-choix="401">401</button><button type="button" data-choix="403">403</button><button type="button" data-choix="404">404</button><button type="button" data-choix="500">500</button>
+          <span class="verdict"></span>
+        </div>
+        <div class="tri-item" data-type="500" data-explication="500 Internal Server Error : le serveur ne sait pas traiter la requête, ici à cause d'une erreur dans le .htaccess. Le détail est dans /var/log/apache2/error.log.">
+          <code>Le .htaccess contient une directive mal orthographiée.</code>
+          <button type="button" data-choix="200">200</button><button type="button" data-choix="301">301</button><button type="button" data-choix="401">401</button><button type="button" data-choix="403">403</button><button type="button" data-choix="404">404</button><button type="button" data-choix="500">500</button>
+          <span class="verdict"></span>
+        </div>
+      </div>
+      <p class="score" id="codes-score" aria-live="polite"></p>
+
+      <div class="callout" style="margin-top: 1.4rem">
+        <h4>À retenir</h4>
+        <p>
+          Après chaque modification d'un fichier <code>.conf</code>, vérifiez
+          la syntaxe (<code>apache2ctl configtest</code>), puis rechargez le
+          service (<code>systemctl reload apache2</code>) : sans cela, Apache
+          garde l'ancienne configuration. Un fichier <code>.htaccess</code>,
+          lui, est relu à chaque requête, à condition que
+          <code>AllowOverride</code> l'autorise.
+        </p>
+      </div>
+
+      <p style="text-align: center; margin-top: 2rem">
+        <a class="btn" href="livrable.html">Préparer mon livrable &rarr;</a>
+      </p>
+    </main>
+
+    <footer class="site-footer">
+      R1.13 Hébergement - BUT MMI 1 · IUT de Béziers · TP3 Serveur Web Apache
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/serveur.js"></script>
+    <script src="js/terminal.js"></script>
+    <script src="js/navigateur.js"></script>
+    <script src="js/securisation.js"></script>
+  </body>
+</html>
