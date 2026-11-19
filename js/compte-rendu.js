@@ -1,4 +1,4 @@
-// Compte rendu PDF du TP3 (jsPDF). Même mise en page que le certificat des
+// Compte rendu PDF du TP4 (jsPDF). Même mise en page que le certificat des
 // exercices du dépôt bases_de_js et que le compte rendu du TP1 :
 //   - page 1 : logos de part et d'autre du titre, identité de l'étudiant·e,
 //     statistiques et état d'avancement ;
@@ -9,7 +9,7 @@
 // « Compte rendu incomplet » et porte la mention « INCOMPLET ».
 
 var CompteRendu = (function () {
-  var TITRE_TP = 'TP3 - Serveur Web Apache';
+  var TITRE_TP = 'TP4 - Serveur Web Apache';
   var RESSOURCE = 'R1.13 Hébergement';
 
   // Les polices standard du PDF ne connaissent que le latin-1 : on retire
@@ -322,7 +322,7 @@ var CompteRendu = (function () {
       doc.text('Document protégé : modification interdite', W / 2, H - 17, { align: 'center' });
     }
 
-    doc.save('compte_rendu_TP3_' + slug(opts.nom) + '_' + slug(opts.prenom) + (complet ? '' : '_incomplet') + '.pdf');
+    doc.save('compte_rendu_TP4_' + slug(opts.nom) + '_' + slug(opts.prenom) + (complet ? '' : '_incomplet') + '.pdf');
     return { pages: pages, complet: complet };
   }
 
